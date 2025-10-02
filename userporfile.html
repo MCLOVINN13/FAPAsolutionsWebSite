@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil | FAPAsolutions™</title>
+
+    <link rel="stylesheet" href="assets/css/style.css"> 
+    <link rel="stylesheet" href="assets/css/userporfile.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="loader-wrapper" id="loaderWrapper">
+        <div class="hole">
+            <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+    </div>
+
+    <header class="main-header" id="mainHeader">
+        <nav class="header-nav">
+            <a href="index.html" class="logo">FAPA<span>solutions™</span></a>
+            
+            <div class="header-actions">
+                <div class="search-container">
+                    <label for="searchInput" class="visually-hidden">Buscar</label>
+                    <span class="search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>
+                    </span>
+                    <input type="search" id="searchInput" class="search-input" placeholder="Buscar soluciones...">
+                </div>
+                
+                <div class="profile-area">
+                    <button 
+                        class="profile-toggle" 
+                        id="profileToggle" 
+                        aria-label="Abrir menú de usuario"
+                        aria-expanded="false"
+                        aria-controls="dropdownMenu">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <div class="user-info">
+                            <div class="user-avatar">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>
+                            </div>
+                            <div class="user-details">
+                                <h4>Invitado</h4>
+                                <p>Bienvenido</p>
+                            </div>
+                        </div>
+                        <ul>
+                            <li><a href="userporfile.html">Mi Perfil</a></li>
+                            <li><a href="/ajustes">Ajustes</a></li>
+                            <li><a href="/facturacion">Facturación</a></li>
+                        </ul>
+                        <div class="auth-buttons">
+                            <a href="login.html" class="btn btn-glow">Log In</a>
+                            <a href="register.html" class="btn btn-glow signin">Sign In</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="profile-page">
+        <div class="profile-container">
+
+            <header class="profile-header">
+                <div class="profile-cover">
+                    <button class="edit-cover-btn" aria-label="Cambiar foto de portada">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" /></svg>
+                    </button>
+                    <input type="file" id="coverImageInput" class="hidden-file-input" accept="image/*">
+                </div>
+
+                <div class="profile-avatar-info">
+                    <div class="profile-avatar">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3E%3Cpath fill-rule='evenodd' d='M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z' clip-rule='evenodd' /%3E%3C/svg%3E" alt="Avatar del usuario" id="avatarImage">
+                        <button class="edit-avatar-btn" aria-label="Cambiar foto de perfil">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" /></svg>
+                        </button>
+                        <input type="file" id="avatarImageInput" class="hidden-file-input" accept="image/*">
+                    </div>
+                    <div class="profile-user-details">
+                        <h1 class="profile-display-name">Nombre de Usuario</h1>
+                        <p class="profile-username">@username</p>
+                        <div class="profile-meta">
+                            <span id="userLocationDisplay">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 0 0 .281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.976 2.4-1.77C15.3 14.949 16 13.566 16 12c0-1.578-1.5-3.5-2.5-4.5S11 6 10 6c-1 0-2.5 1.5-3.5 2.5S4 10.422 4 12c0 1.567.7 2.95 1.957 3.954.955.794 1.78 1.386 2.4 1.77.311.193.571.337.757.433.09.046.17.086.25.124l.02.008.006.003ZM10 11.25a2.25 2.25 0 1 0 0-4.5 2.25 2.25 0 0 0 0 4.5Z" clip-rule="evenodd" /></svg>
+                                <span id="locationText">Aguascalientes, México</span>
+                            </span>
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.75 2a.75.75 0 0 1 .75.75V4h7V2.75a.75.75 0 0 1 1.5 0V4h.25A2.75 2.75 0 0 1 18 6.75v8.5A2.75 2.75 0 0 1 15.25 18H4.75A2.75 2.75 0 0 1 2 15.25v-8.5A2.75 2.75 0 0 1 4.75 4H5V2.75A.75.75 0 0 1 5.75 2Zm-1 5.5h10.5a.75.75 0 0 1 0 1.5H4.75a.75.75 0 0 1 0-1.5Z" clip-rule="evenodd" /></svg>
+                                <span id="joinDateText">Miembro desde Oct 2025</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="profile-header-actions">
+                        <button class="btn-edit-profile">Editar Perfil</button>
+                    </div>
+                </div>
+            </header>
+
+            <nav class="profile-nav" role="tablist" aria-label="Navegación del perfil">
+                <button role="tab" aria-selected="true" aria-controls="tab-devices-panel" id="tab-devices" class="profile-tab active">Mis Dispositivos</button>
+                <button role="tab" aria-selected="false" aria-controls="tab-history-panel" id="tab-history" class="profile-tab">Historial</button>
+                <button role="tab" aria-selected="false" aria-controls="tab-settings-panel" id="tab-settings" class="profile-tab">Configuración</button>
+                <button role="tab" aria-selected="false" aria-controls="tab-billing-panel" id="tab-billing" class="profile-tab">Facturación</button>
+            </nav>
+
+            <div class="profile-tab-content">
+                <section id="tab-devices-panel" role="tabpanel" aria-labelledby="tab-devices" class="tab-panel active">
+                    <div class="panel-header">
+                        <h2>Mis Dispositivos Registrados</h2>
+                        <button class="btn-add-device">Registrar Nuevo Dispositivo</button>
+                    </div>
+                    <div class="devices-list">
+                        <article class="device-card">
+                            <div class="device-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" /></svg>
+                            </div>
+                            <div class="device-details">
+                                <h3>iPhone 13 Pro</h3>
+                                <p>Falla reportada: Pantalla no responde al tacto.</p>
+                            </div>
+                            <div class="device-status status-in-progress">
+                                <span>En Diagnóstico</span>
+                            </div>
+                            <div class="device-actions">
+                                <a href="#">Ver Detalles</a>
+                            </div>
+                        </article>
+                        </div>
+                </section>
+
+                <section id="tab-history-panel" role="tabpanel" aria-labelledby="tab-history" class="tab-panel">
+                    <div class="panel-header">
+                        <h2>Historial de Servicios</h2>
+                    </div>
+                    <p>Aún no tienes reparaciones completadas.</p>
+                </section>
+
+                <section id="tab-settings-panel" role="tabpanel" aria-labelledby="tab-settings" class="tab-panel">
+                    <div class="panel-header">
+                        <h2>Configuración de la Cuenta</h2>
+                    </div>
+                    <form class="settings-form">
+                        <div class="form-section">
+                            <h3>Información Personal</h3>
+                            <div class="input-group">
+                                <label for="profile-name">Nombre Completo</label>
+                                <input type="text" id="profile-name" value="Nombre de Usuario">
+                            </div>
+                            <div class="input-group">
+                                <label for="profile-email">Correo Electrónico</label>
+                                <input type="email" id="profile-email" value="username@email.com">
+                            </div>
+                            <div class="input-group">
+    <label for="profile-location">Ubicación (Ciudad, Estado)</label>
+    <input type="text" id="profile-location" placeholder="Ej. Aguascalientes, México">
+</div>
+                        </div>
+                        <div class="form-section">
+                            <h3>Cambiar Contraseña</h3>
+                            <div class="input-group">
+                                <label for="current-password">Contraseña Actual</label>
+                                <input type="password" id="current-password">
+                            </div>
+                            <div class="input-group">
+                                <label for="new-password">Nueva Contraseña</label>
+                                <input type="password" id="new-password">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-save-changes">Guardar Cambios</button>
+                        </div>
+                    </form>
+                </section>
+                
+                <section id="tab-billing-panel" role="tabpanel" aria-labelledby="tab-billing" class="tab-panel">
+                    <div class="panel-header">
+                        <h2>Información de Facturación</h2>
+                    </div>
+                    <p>No hay información de facturación disponible.</p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-grid">
+            <div class="footer-column footer-column-brand">
+                <div class="footer-logo">
+                    <a href="index.html">FAPA<span>solutions™</span></a>
+                </div>
+                <p class="footer-tagline">Tu centro de confianza para la reparación de dispositivos en Aguascalientes.</p>
+                <ul class="footer-contact-list">
+                    <li>
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" /></svg>
+                        <span>Aguascalientes, Ags., México</span>
+                    </li>
+                    <li>
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" /></svg>
+                        <a href="tel:+524490000000">+52 (449) 000-0000</a>
+                    </li>
+                    <li>
+                        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
+                        <a href="mailto:contacto@fapasolutions.com">contacto@fapasolutions.com</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer-column footer-column-links">
+                <h4 class="footer-heading">Navegación</h4>
+                <ul class="footer-link-list">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="faq.html">Preguntas Frecuentes</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column footer-column-legal">
+                <h4 class="footer-heading">Soporte</h4>
+                <ul class="footer-link-list">
+                    <li><a href="condiciones.html">Condiciones del servicio</a></li>
+                    <li><a href="privacidad.html">Política de privacidad</a></li>
+                    <li><a href="feedback.html">Enviar comentarios</a></li>
+                    <li><a href="login.html">Configuración de cuenta</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column footer-column-social">
+                <h4 class="footer-heading">Síguenos</h4>
+                <div class="footer-social-icons">
+                    <a href="#" aria-label="Facebook de FAPAsolutions" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96A10 10 0 0 0 12 2.04Z" /></svg>
+                    </a>
+                    <a href="#" aria-label="Instagram de FAPAsolutions" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M 8 3 C 5.243 3 3 5.243 3 8 L 3 16 C 3 18.757 5.243 21 8 21 L 16 21 C 18.757 21 21 18.757 21 16 L 21 8 C 21 5.243 18.757 3 16 3 L 8 3 z M 8 5 L 16 5 C 17.654 5 19 6.346 19 8 L 19 16 C 19 17.654 17.654 19 16 19 L 8 19 C 6.346 19 5 17.654 5 16 L 5 8 C 5 6.346 6.346 5 8 5 z M 17 6 A 1 1 0 0 0 16 7 A 1 1 0 0 0 17 8 A 1 1 0 0 0 18 7 A 1 1 0 0 0 17 6 z M 12 7 C 9.243 7 7 9.243 7 12 C 7 14.757 9.243 17 12 17 C 14.757 17 17 14.757 17 12 C 17 9.243 14.757 7 12 7 z M 12 9 C 13.654 9 15 10.346 15 12 C 15 13.654 13.654 15 12 15 C 10.346 15 9 13.654 9 12 C 9 10.346 10.346 9 12 9 z"/></svg>
+                    </a>
+                    <a href="#" aria-label="WhatsApp de FAPAsolutions" class="social-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.03 4.97A9.91 9.91 0 0 0 12 2C6.48 2 2 6.48 2 12c0 1.74.45 3.39 1.22 4.86L2 22l5.14-1.22A9.93 9.93 0 0 0 12 22c5.52 0 10-4.48 10-10a9.92 9.92 0 0 0-2.97-7.03zM12 20.2c-1.54 0-3-.38-4.3-1.04l-.3-.18-3.2.77.77-3.2-.2-.32A8.15 8.15 0 0 1 3.8 12c0-4.51 3.69-8.2 8.2-8.2s8.2 3.69 8.2 8.2-3.69 8.2-8.2 8.2zm4.43-4.93c-.24-.12-1.4-.69-1.62-.77-.22-.08-.38-.12-.54.12-.16.24-.61.77-.75.93-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2s-1.4-1.52-1.58-1.78-.04-.24.08-.38c.11-.14.24-.28.38-.42.14-.14.18-.24.28-.4.1-.16.05-.3-.01-.42s-.54-1.3-  .74-1.78c-.2-.48-.4-.42-.54-.42h-.48c-.16 0-.42.06-.64.3s-.85.83-1.04 2.02c-.18 1.19.43 2.94 1.22 3.82.79.88 2.03 1.77 3.42 2.37.36.15.65.2.89.26.47.12.85.1.97-.08.14-.2.61-1.04.73-1.28.12-.24.24-.18.42-.12.18.06 1.14.54 1.34.64.2.1.34.14.38.22.04.08.02.48-.04.54-.06.06-.24.12-.48.24z"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <p>&copy; 2025 FAPAsolutions™. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/script.js" defer></script>
+    <script src="assets/js/loader.js" defer></script>
+</body>
+</html>

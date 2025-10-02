@@ -1,0 +1,231 @@
+/* --- Animación de fondo "Marea" --- */
+@keyframes tide {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Para alinear el footer abajo */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    
+    /* Fondo animado estilo "Marea" */
+    background: linear-gradient(-45deg, var(--bg-color), #0d1a1b, var(--bg-color), #0f0f22);
+    background-size: 400% 400%;
+    animation: tide 15s ease infinite;
+}
+
+/* --- Contenedor Principal del Formulario --- */
+.form-container {
+    position: relative;
+    width: 380px;
+    border-radius: 0.75rem;
+    
+    /* Efecto de cristal empañado (frosted glass) */
+    background-color: rgba(30, 30, 30, 0.75);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    padding: 2rem;
+    color: var(--text-color);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    text-align: center;
+    font-size: 1.75rem;
+    line-height: 2rem;
+    font-weight: 700;
+}
+
+.form {
+    margin-top: 1.5rem;
+}
+
+/* --- Grupos de Inputs --- */
+.input-group {
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.input-group label {
+    display: block;
+    color: rgba(240, 240, 240, 0.7);
+    margin-bottom: 4px;
+}
+
+.input-group input {
+    width: 100%;
+    border-radius: 0.375rem;
+    border: 1px solid var(--border-color);
+    outline: 0;
+    background-color: rgba(22, 22, 22, 0.8);
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box; /* Asegura que el padding no aumente el ancho total */
+}
+
+.input-group input:focus {
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 15px rgba(0, 255, 213, 0.2);
+}
+
+.forgot {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: rgba(240, 240, 240, 0.7);
+    margin: 8px 0 14px 0;
+}
+
+.forgot a, .signup a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.forgot a:hover, .signup a:hover {
+    text-decoration: underline var(--primary-accent);
+}
+
+/* --- Botón Principal --- */
+.sign {
+    display: block;
+    width: 100%;
+    background-color: var(--primary-accent);
+    padding: 0.75rem;
+    text-align: center;
+    color: #111;
+    border: none;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sign:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 255, 213, 0.15);
+}
+
+/* --- Separador y Redes Sociales --- */
+.social-message {
+    display: flex;
+    align-items: center;
+    padding-top: 1.5rem;
+}
+
+.line {
+    height: 1px;
+    flex: 1 1 0%;
+    background-color: var(--border-color);
+}
+
+.social-message .message {
+    padding: 0 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: rgba(240, 240, 240, 0.6);
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem; /* Espacio reducido para acomodar más iconos */
+    margin-top: 0.5rem;
+    flex-wrap: wrap; /* Permite que los iconos pasen a la siguiente línea si no caben */
+}
+
+.social-icons .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 0.6rem; /* Ligeramente más pequeño */
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.social-icons .icon:hover {
+    border-color: var(--primary-accent);
+    background-color: rgba(0, 255, 213, 0.05);
+}
+
+.social-icons .icon svg {
+    height: 1.1rem; /* Ligeramente más pequeño */
+    width: 1.1rem;
+    fill: #fff;
+}
+
+.signup {
+    text-align: center;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    color: rgba(240, 240, 240, 0.7);
+    margin-top: 1.5rem;
+}
+
+/* --- Botón para volver a Home --- */
+.back-home-link {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    color: var(--text-color);
+    opacity: 0.6;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.back-home-link:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* --- Footer --- */
+.login-footer {
+    position: absolute;
+    bottom: 20px;
+    color: var(--text-color);
+    opacity: 0.5;
+    font-size: 0.8rem;
+    text-align: center;
+}
+
+/* --- AJUSTES DE RESPONSIVIDAD --- */
+@media (max-width: 480px) {
+    body {
+        /* En móviles, no centramos verticalmente para que el form se vea desde arriba */
+        justify-content: flex-start; 
+        padding-top: 5vh;
+    }
+
+    .form-container {
+        width: 90%; /* Ocupa el 90% del ancho en lugar de un tamaño fijo */
+        padding: 1.5rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .login-footer {
+        /* En móviles el footer puede no ser visible si el teclado está abierto, lo cual es aceptable */
+        position: static; /* Lo sacamos de la posición absoluta */
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+}

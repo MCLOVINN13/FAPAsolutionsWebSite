@@ -1,0 +1,803 @@
+/* --- 1. VARIABLES Y ESTILOS GLOBALES --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #161616;
+    --text-color: #f0f0f0;
+}
+
+:root {
+    --bg-color: #161616;
+    --text-color: #f0f0f0;
+    --primary-accent: #00FFD5;
+    --surface-color: #1e1e1e;
+    --surface-transparent: rgba(22, 22, 22, 0.65);
+    --border-color: rgba(255, 255, 255, 0.1);
+    
+    --header-height: 80px;
+    --border-radius-md: 12px;
+    --border-radius-sm: 8px;
+    --transition-speed: 0.3s;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.content {
+    height: 200vh; /* Solo para permitir el scroll en la demo */
+    padding: calc(var(--header-height) + 40px) 5%;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+
+/* --- 2. HEADER Y NAVEGACIÓN --- */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+    transition: background var(--transition-speed) ease, 
+                backdrop-filter var(--transition-speed) ease, 
+                border-bottom var(--transition-speed) ease;
+}
+
+.main-header.scrolled {
+    background: var(--surface-transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- 6. HERO SECTION (BANNER V2: PARALLAX) --- */
+.hero-section {
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+    
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 5%;
+    overflow: hidden;
+    
+    /* Añadimos perspectiva para el efecto 3D */
+    perspective: 1000px; 
+
+    /* Gradiente "Aurora" más grande y suave */
+    background: radial-gradient(
+        circle 800px at var(--mouse-x) var(--mouse-y), 
+        rgba(0, 255, 213, 0.15), /* Brillo del color primario */
+        transparent 40%
+    );
+    
+    /* Transición suave cuando el mouse sale de la ventana */
+    transition: background 0.5s linear;
+}
+
+.hero-content {
+    max-width: 800px;
+    /* Transición para el movimiento parallax */
+    transition: transform 0.1s ease-out; 
+}
+
+/* (NUEVO) Animación de pulso para el fondo */
+.hero-section.pulse {
+    animation: background-pulse 0.5s ease-out;
+}
+
+@keyframes background-pulse {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: rgba(0, 255, 213, 0.08);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Sombra para mejor legibilidad */
+}
+
+.hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-weight: 300;
+    opacity: 0.8;
+    margin-bottom: 2.5rem;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 14px 32px;
+    background-color: var(--primary-accent);
+    color: #111;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--border-radius-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 255, 213, 0.15);
+}
+
+/* (CORREGIDO) Estilo para la onda (ripple), ahora oscura */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    /* Un color oscuro para que contraste con el botón cian */
+    background-color: rgba(0, 0, 0, 0.15); 
+    transform: scale(0);
+    animation: ripple-effect 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple-effect {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* --- 3. COMPONENTES DEL HEADER --- */
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+.logo span {
+    font-weight: 300;
+    opacity: 0.8;
+}
+
+/* --- 3. COMPONENTES DEL HEADER --- */
+/* ... (Los estilos de .logo y .profile-area se mantienen igual) ... */
+/* --- (NUEVO) Contenedor para acciones del header --- */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espacio entre el ícono de búsqueda y el de perfil */
+}
+
+/* --- (MODIFICADO) Lógica de la Barra de Búsqueda --- */
+.search-container {
+    position: relative; /* Contexto para el input posicionado absolutamente */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+}
+
+.search-icon {
+    position: relative; /* Lo ponemos relative para que tenga un z-index */
+    color: rgba(255, 255, 255, 0.8);
+    z-index: 10; /* El ícono siempre debe estar por encima del input */
+    pointer-events: none; /* Evita que el ícono intercepte clics */
+}
+
+.search-input {
+    position: absolute;
+    top: 0;
+    /* Anclamos el input a la derecha del contenedor */
+    right: 0; 
+    
+    /* Estado inicial (colapsado) */
+    width: 45px; 
+    height: 45px;
+    margin: 0;
+    padding: 0 20px 0 45px;
+    
+    background-color: #333;
+    border: 1px solid var(--border-color);
+    border-radius: 50%; /* Inicia como un círculo */
+    
+    color: var(--text-color);
+    font-size: 0.9rem;
+    outline: none;
+    
+    opacity: 0; /* Inicia invisible */
+    pointer-events: none;
+    z-index: 5; /* El input está por debajo del ícono pero por encima del resto */
+
+    transition: width var(--transition-speed) ease-in-out, 
+                opacity 0.2s ease-in-out,
+                border-radius var(--transition-speed) ease-in-out,
+                background-color var(--transition-speed) ease-in-out,
+                backdrop-filter var(--transition-speed) ease-in-out;
+}
+
+/* Estado expandido: se activa al pasar el mouse o al hacer foco DENTRO del contenedor */
+.search-container:hover .search-input,
+.search-container:focus-within .search-input {
+    width: 300px; /* Ancho final */
+    opacity: 1;
+    pointer-events: auto; /* Se puede usar el input */
+    border-radius: 25px; /* Forma de píldora */
+    border-color: rgba(0, 255, 213, 0.5);
+    
+    /* Efecto de cristal esmerilado */
+    background-color: var(--surface-transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.search-input::placeholder { 
+    color: rgba(255, 255, 255, 0.5); 
+}
+
+/* Efecto de brillo al hacer foco en el input directamente */
+.search-input:focus {
+    box-shadow: 0 0 15px rgba(0, 255, 213, 0.2);
+}
+
+.profile-area { position: relative; }
+.profile-toggle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #333;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: box-shadow var(--transition-speed) ease;
+}
+.profile-toggle:hover, .profile-toggle:focus-visible {
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 255, 213, 0.4);
+}
+
+/* --- 4. MENÚ DESPLEGABLE --- */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 15px);
+    right: 0;
+    width: 280px;
+    background: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(15px);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+    padding: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease, visibility var(--transition-speed);
+}
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    background-color: #444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+.user-details h4, .user-details p { margin: 0; }
+.user-details h4 { font-size: 1.1rem; }
+.user-details p { font-size: 0.8rem; opacity: 0.7; }
+.dropdown-menu ul { list-style: none; padding: 0; margin: 0 0 15px 0; }
+.dropdown-menu ul li a {
+    display: block;
+    padding: 12px 10px;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: var(--border-radius-sm);
+    transition: background-color 0.2s ease;
+    font-size: 0.9rem;
+}
+.dropdown-menu ul li a:hover, .dropdown-menu ul li a:focus-visible {
+    background-color: rgba(255, 255, 255, 0.08);
+    outline: none;
+}
+
+/* --- 5. BOTÓN GLOWING REUTILIZABLE --- */
+.auth-buttons { display: flex; gap: 10px; }
+.btn {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    color: var(--text-color);
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: transform 0.2s ease;
+}
+.btn.btn-glow::after {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    inset: 0;
+    background-color: #333;
+    border-radius: var(--border-radius-sm);
+}
+.btn.btn-glow::before {
+    content: "";
+    background: linear-gradient(45deg, #FF0000, #FF7300, #FFFB00, #48FF00, #00FFD5, #002BFF, #FF00C8, #FF0000);
+    position: absolute;
+    top: -2px; left: -2px;
+    background-size: 600%;
+    z-index: -1;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    filter: blur(8px);
+    animation: glowing-animation 20s linear infinite;
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease-in-out;
+    border-radius: var(--border-radius-sm);
+}
+@keyframes glowing-animation {
+    0% { background-position: 0 0; }
+    100% { background-position: 600% 0; }
+}
+.btn.btn-glow:hover::before { opacity: 1; }
+.btn:active { transform: scale(0.97); }
+.btn.signin { background: transparent; }
+.btn.signin::after {
+    background: transparent;
+    border: 1px solid var(--primary-accent);
+}
+.btn.signin:hover::before { opacity: 0.6; }
+
+/* --- Ajuste para el Logo --- */
+.logo {
+    /* ... (tus estilos existentes para .logo se mantienen) ... */
+    
+    /* AÑADE ESTA LÍNEA para que la transición sea suave en ambos sentidos */
+    transition: opacity var(--transition-speed) ease;
+}
+
+.logo.fade-out {
+    opacity: 0.15;
+    pointer-events: none; /* Evita que se pueda hacer clic en el logo cuando está desvanecido */
+}
+
+/* --- 7. LOADER DE PÁGINA --- */
+
+/* Contenedor que ocupa toda la pantalla */
+.loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999; /* Asegura que esté por encima de todo */
+    background-color: var(--bg-color); /* Fondo oscuro consistente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Transición para el desvanecimiento */
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* Estado oculto del loader */
+.loader-wrapper.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Estos son los estilos que proporcionaste, pero adaptados */
+.hole {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hole i {
+  display: block;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 140px;
+  opacity: 0;
+  animation-name: scale;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+/* Keyframes con el color de acento de tu marca */
+@keyframes scale {
+  0% {
+    transform: scale(2);
+    opacity: 0;
+    /* Color adaptado a tu paleta (cian) */
+    box-shadow: 0px 0px 50px rgba(0, 255, 213, 0.5); 
+  }
+  50% {
+    transform: scale(1) translate(0px, -5px);
+    opacity: 1;
+    /* Color adaptado a tu paleta (cian) */
+    box-shadow: 0px 8px 20px rgba(0, 255, 213, 0.5);
+  }
+  100% {
+    transform: scale(0.1) translate(0px, 5px);
+    opacity: 0;
+    box-shadow: 0px 10px 20px rgba(0, 255, 213, 0);
+  }
+}
+
+/* El resto de los estilos para los delays se mantiene igual */
+.hole i:nth-child(1) { animation-delay: 0.3s; }
+.hole i:nth-child(2) { animation-delay: 0.6s; }
+.hole i:nth-child(3) { animation-delay: 0.9s; }
+.hole i:nth-child(4) { animation-delay: 1.2s; }
+.hole i:nth-child(5) { animation-delay: 1.5s; }
+.hole i:nth-child(6) { animation-delay: 1.8s; }
+.hole i:nth-child(7) { animation-delay: 2.1s; }
+.hole i:nth-child(8) { animation-delay: 2.4s; }
+.hole i:nth-child(9) { animation-delay: 2.7s; }
+.hole i:nth-child(10) { animation-delay: 3s; }
+
+/* --- 8. SECCIÓN DE SERVICIOS --- */
+.services-section {
+    padding: 100px 5%;
+    background-color: #111; /* Un fondo ligeramente distinto para separar secciones */
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(0, 255, 213, 0.1);
+}
+
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 2.5rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    font-weight: 300;
+    opacity: 0.8;
+    max-width: 700px;
+    margin: 0 auto 4rem auto;
+}
+
+.services-grid {
+    display: grid;
+    /* Grid responsivo: se ajusta automáticamente */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+}
+
+/* --- TARJETA DE SERVICIO ADAPTADA --- */
+.service-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--surface-color);
+    border-radius: 1rem;
+    padding: 1px; /* Espacio para que el borde se vea */
+    overflow: hidden; /* Oculta lo que se salga del borde redondeado */
+}
+
+.service-card .card__border {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    border-radius: 1rem;
+
+    /* Gradiente animado de los botones de login */
+    background: linear-gradient(45deg, #FF0000, #FF7300, #FFFB00, #48FF00, #00FFD5, #002BFF, #FF00C8, #FF0000);
+    background-size: 600%;
+    animation: glowing-animation 20s linear infinite;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+}
+
+.service-card:hover .card__border {
+    opacity: 1;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: var(--surface-color);
+    border-radius: 1rem; /* Borde interior */
+    z-index: 1; /* Se pone por encima del borde brillante */
+    height: 100%; /* Asegura que todas las tarjetas tengan la misma altura */
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    background-color: rgba(0, 255, 213, 0.08);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card-icon svg {
+    width: 24px;
+    height: 24px;
+    color: var(--primary-accent);
+}
+
+.card_title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.card_paragraph {
+    font-size: 0.9rem;
+    color: rgba(240, 240, 240, 0.7);
+    line-height: 1.6;
+    flex-grow: 1; /* Empuja el precio y botón hacia abajo */
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: var(--border-color);
+    border: none;
+}
+
+.card-price {
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+.card-price strong {
+    font-weight: 700;
+    color: var(--primary-accent);
+}
+
+.contact-text {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin-top: 2rem;
+    text-align: center;
+    padding: 0 1rem;
+}
+.contact-text a {
+    font-weight: 700;
+    color: var(--primary-accent);
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+.contact-text a:hover {
+    transform: translateY(-2px);
+    color: var(--primary-accent);
+    text-shadow: 0 0 10px rgba(0, 255, 213, 0.199);
+}
+
+.button {
+    cursor: pointer;
+    padding: 0.75rem;
+    width: 100%;
+    background-color: var(--primary-accent);
+    color: #111;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 0;
+    border-radius: var(--border-radius-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 255, 213, 0.15);
+}
+
+/* No olvides agregar esta animación a tu CSS si no la tienes de los botones */
+@keyframes glowing-animation {
+    0% { background-position: 0 0; }
+    100% { background-position: 600% 0; }
+}
+
+/* --- 9. FOOTER (VERSIÓN COMPACTA) --- */
+.site-footer {
+    background-color: #101010;
+    padding: 3rem 5% 1.5rem 5%; /* ESPACIO VERTICAL REDUCIDO */
+    border-top: 1px solid var(--border-color);
+    color: rgba(240, 240, 240, 0.7);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem; /* ESPACIO ENTRE COLUMNAS REDUCIDO */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-logo {
+    margin-bottom: 1rem; /* REDUCIDO */
+}
+
+.footer-logo a {
+    font-size: 1.4rem; /* REDUCIDO */
+    font-weight: 700;
+    color: var(--text-color);
+    text-decoration: none;
+    letter-spacing: 1px;
+}
+
+.footer-logo span {
+    font-weight: 300;
+    opacity: 0.8;
+}
+
+.footer-tagline {
+    font-size: 0.85rem; /* REDUCIDO */
+    line-height: 1.6;
+    margin-bottom: 1.25rem; /* REDUCIDO */
+}
+
+.footer-contact-list,
+.footer-link-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* ESPACIO ENTRE ITEMS REDUCIDO */
+}
+
+.footer-contact-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* REDUCIDO */
+    font-size: 0.85rem; /* REDUCIDO */
+}
+
+.footer-contact-list svg {
+    width: 16px; /* REDUCIDO */
+    height: 16px; /* REDUCIDO */
+    flex-shrink: 0;
+    color: var(--primary-accent);
+}
+
+.footer-contact-list a,
+.footer-link-list a {
+    color: rgba(240, 240, 240, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-contact-list a:hover,
+.footer-link-list a:hover {
+    color: var(--text-color);
+}
+
+.footer-heading {
+    font-size: 1rem; /* REDUCIDO */
+    font-weight: 600;
+    color: var(--text-color);
+    margin: 0 0 1.25rem 0; /* REDUCIDO */
+    position: relative;
+    padding-bottom: 0.5rem; /* REDUCIDO */
+}
+
+.footer-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background-color: var(--primary-accent);
+}
+
+.footer-social-icons {
+    display: flex;
+    gap: 0.75rem; /* REDUCIDO */
+}
+
+.social-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px; /* REDUCIDO */
+    height: 36px; /* REDUCIDO */
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.social-icon svg {
+    width: 18px; /* REDUCIDO */
+    height: 18px; /* REDUCIDO */
+    fill: var(--text-color);
+    transition: fill 0.3s ease;
+}
+
+.social-icon:hover {
+    background-color: transparent;
+    border-color: var(--primary-accent);
+}
+
+.social-icon:hover svg {
+    fill: var(--primary-accent);
+}
+
+.footer-bottom-bar {
+    max-width: 1200px;
+    margin: 2.5rem auto 0 auto; /* REDUCIDO */
+    padding-top: 1.5rem; /* REDUCIDO */
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+    font-size: 0.8rem; /* REDUCIDO */
+    opacity: 0.6;
+}

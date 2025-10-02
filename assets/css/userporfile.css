@@ -1,0 +1,247 @@
+.profile-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: calc(var(--header-height) + 40px) 5%;
+}
+
+/* --- 1. ENCABEZADO DEL PERFIL --- */
+.profile-header {
+    margin-bottom: 2rem;
+}
+
+.profile-cover {
+    position: relative;
+    height: 300px;
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    background-image: linear-gradient(45deg, #1f1f1f 25%, transparent 25%), linear-gradient(-45deg, #1f1f1f 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #1f1f1f 75%), linear-gradient(-45deg, transparent 75%, #1f1f1f 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    background-size: cover;
+    background-position: center;
+}
+
+.profile-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.edit-cover-btn, .edit-avatar-btn {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+    z-index: 2;
+}
+.edit-cover-btn:hover, .edit-avatar-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+.edit-cover-btn svg, .edit-avatar-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.hidden-file-input {
+    display: none;
+}
+
+.profile-avatar-info {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.5rem;
+    margin-top: -75px; /* Sube el avatar sobre la portada */
+    padding-left: 2rem;
+    position: relative;
+}
+
+.profile-avatar {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid var(--bg-color);
+    flex-shrink: 0;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.edit-avatar-btn {
+    bottom: 5px;
+    right: 5px;
+}
+
+.profile-display-name {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+}
+.profile-username {
+    font-size: 1rem;
+    color: rgba(240, 240, 240, 0.6);
+    margin: 0.25rem 0 0.75rem 0;
+}
+.profile-meta {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+    color: rgba(240, 240, 240, 0.7);
+}
+.profile-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.profile-meta svg {
+    width: 16px;
+    height: 16px;
+}
+
+.profile-header-actions {
+    margin-left: auto; /* Empuja el botón de editar a la derecha */
+}
+
+/* --- 2. NAVEGACIÓN POR PESTAÑAS --- */
+.profile-nav {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+.profile-tab {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: rgba(240, 240, 240, 0.6);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+.profile-tab:hover {
+    color: var(--text-color);
+}
+.profile-tab.active {
+    color: var(--primary-accent);
+    border-bottom-color: var(--primary-accent);
+}
+
+/* --- 3. PANELES DE CONTENIDO --- */
+.tab-panel {
+    display: none; /* Ocultos por defecto */
+    animation: fadeIn 0.5s ease;
+}
+.tab-panel.active {
+    display: block; /* El panel activo se muestra */
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.panel-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+/* Estilos para las tarjetas de dispositivos */
+.device-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+.device-icon { color: var(--primary-accent); }
+.device-icon svg { width: 32px; height: 32px; }
+.device-details h3 { margin: 0 0 0.25rem 0; }
+.device-details p { margin: 0; opacity: 0.7; }
+.device-status { margin-left: auto; font-weight: 600; padding: 0.5rem 1rem; border-radius: 99px; font-size: 0.85rem; }
+.status-in-progress { background-color: rgba(255, 193, 7, 0.1); color: #ffc107; }
+.device-actions a { color: var(--primary-accent); text-decoration: none; font-weight: 600; }
+
+/* Estilos para el formulario de configuración (reutilizando los de login) */
+.settings-form .input-group { margin-bottom: 1.5rem; }
+.settings-form label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+.settings-form input {
+    width: 100%;
+    padding: 12px;
+    background: #111;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--text-color);
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+.settings-form input:focus {
+    outline: none;
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 10px rgba(0, 255, 213, 0.2);
+}
+.btn-save-changes { /* Botón principal, similar al de login */
+    padding: 14px 32px;
+    background-color: var(--primary-accent);
+    color: #111;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* --- 4. RESPONSIVIDAD --- */
+@media (max-width: 768px) {
+    .profile-avatar-info {
+        flex-direction: column;
+        align-items: center;
+        margin-top: -60px;
+        padding-left: 0;
+        text-align: center;
+    }
+    .profile-meta {
+        justify-content: center;
+    }
+    .profile-header-actions {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+    .profile-nav {
+        overflow-x: auto; /* Permite scroll horizontal en las pestañas */
+    }
+    .device-card {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+    .device-status {
+        margin-left: 0;
+        margin-top: 1rem;
+    }
+}
