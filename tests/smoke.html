@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smoke Tests</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#111; color:#eee; padding: 20px; }
+    .result { padding: 6px 10px; border-left: 4px solid; margin: 6px 0; border-radius: 6px; background: #1b1b1b; }
+    .pass { border-color: #00c853; }
+    .fail { border-color: #ff5252; }
+    .summary { margin-top: 16px; font-weight: bold; }
+    a { color: #00FFD5; }
+  </style>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <h1>Smoke Tests</h1>
+  <p>Esta página ejecuta pruebas mínimas sobre la UI y comportamiento básico.</p>
+
+  <div id="results"></div>
+  <div id="summary" class="summary"></div>
+
+  <!-- Minimal DOM required by the app scripts -->
+  <div class="loader-wrapper" id="loaderWrapper"><div class="hole"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+
+  <header class="main-header" id="mainHeader">
+    <nav class="header-nav">
+      <a href="#" class="logo">FAPA<span>solutions™</span></a>
+      <div class="header-actions">
+        <div class="search-container">
+          <label for="searchInput" class="visually-hidden">Buscar</label>
+          <span class="search-icon"></span>
+          <input type="search" id="searchInput" class="search-input" placeholder="Buscar soluciones...">
+        </div>
+        <div class="profile-area">
+          <button class="profile-toggle" id="profileToggle" aria-label="Abrir menú de usuario" aria-expanded="false" aria-controls="dropdownMenu"></button>
+          <div class="dropdown-menu" id="dropdownMenu"></div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <section class="hero-section" id="heroSection" style="margin-top: 100px;">
+    <div class="hero-content">
+      <a href="#" class="cta-button" id="ctaButton">CTA</a>
+    </div>
+  </section>
+
+  <main class="profile-page" style="padding-top: 20px;">
+    <nav class="profile-nav" role="tablist">
+      <button role="tab" aria-selected="true" aria-controls="tab-a" id="tab-a-btn" class="profile-tab active">A</button>
+      <button role="tab" aria-selected="false" aria-controls="tab-b" id="tab-b-btn" class="profile-tab">B</button>
+    </nav>
+    <div class="profile-tab-content">
+      <section id="tab-a" role="tabpanel" aria-labelledby="tab-a-btn" class="tab-panel active">A content</section>
+      <section id="tab-b" role="tabpanel" aria-labelledby="tab-b-btn" class="tab-panel">B content</section>
+    </div>
+  </main>
+
+  <script src="../assets/js/script.js" defer></script>
+  <script src="../assets/js/loader.js" defer></script>
+  <script>
+    (function(){
+      const resultsEl = document.getElementById('results');
+      const summaryEl = document.getElementById('summary');
+      const results = [];
+      function report(name, passed, detail) {
+        results.push(passed);
+        const div = document.createElement('div');
+        div.className = 'result ' + (passed ? 'pass' : 'fail');
+        div.textContent = (passed ? 'PASS: ' : 'FAIL: ') + name + (detail ? ' — ' + detail : '');
+        resultsEl.appendChild(div);
+      }
+      function finish() {
+        const passCount = results.filter(Boolean).length;
+        const total = results.length;
+        summaryEl.textContent = `Resumen: ${passCount}/${total} pruebas aprobadas.`;
+      }
+
+      window.addEventListener('load', () => {
+        try {
+          // 1) Perfil dropdown toggle
+          const toggle = document.getElementById('profileToggle');
+          const menu = document.getElementById('dropdownMenu');
+          toggle.click();
+          const opened = menu.classList.contains('active') && toggle.getAttribute('aria-expanded') === 'true';
+          report('Dropdown: abre al hacer click', opened);
+          document.body.click();
+          const closed = !menu.classList.contains('active') && toggle.getAttribute('aria-expanded') === 'false';
+          report('Dropdown: se cierra al hacer click fuera', closed);
+
+          // 2) Búsqueda atenúa logo
+          const logo = document.querySelector('.logo');
+          const searchContainer = document.querySelector('.search-container');
+          searchContainer.dispatchEvent(new Event('mouseenter'));
+          const faded = logo.classList.contains('fade-out');
+          report('Logo: se atenúa al interactuar con búsqueda', faded);
+          searchContainer.dispatchEvent(new Event('mouseleave'));
+          const unfaded = !logo.classList.contains('fade-out');
+          report('Logo: vuelve al estado normal al salir', unfaded);
+
+          // 3) Tabs del perfil
+          const tabB = document.getElementById('tab-b-btn');
+          const tabA = document.getElementById('tab-a-btn');
+          const panelA = document.getElementById('tab-a');
+          const panelB = document.getElementById('tab-b');
+          tabB.click();
+          const tabsOk = tabB.classList.contains('active') && !tabA.classList.contains('active') && panelB.classList.contains('active') && !panelA.classList.contains('active');
+          report('Tabs: cambian correctamente', tabsOk);
+
+          // 4) Hero CTA ripple / pulso
+          const hero = document.getElementById('heroSection');
+          const cta = document.getElementById('ctaButton');
+          cta.click();
+          const pulsing = hero.classList.contains('pulse');
+          report('Hero: pulso al hacer click en CTA', pulsing);
+          setTimeout(() => {
+            const pulseCleared = !hero.classList.contains('pulse');
+            report('Hero: pulso se elimina después de 500ms', pulseCleared);
+            finish();
+          }, 700);
+        } catch (e) {
+          report('Excepción en pruebas', false, e && e.message);
+          finish();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

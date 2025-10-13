@@ -5,10 +5,6 @@
   box-sizing: border-box;
 }
 
-:root {
-    --bg-color: #161616;
-    --text-color: #f0f0f0;
-}
 
 :root {
     --bg-color: #161616;
@@ -194,7 +190,6 @@ body {
 }
 
 /* --- 3. COMPONENTES DEL HEADER --- */
-/* ... (Los estilos de .logo y .profile-area se mantienen igual) ... */
 /* --- (NUEVO) Contenedor para acciones del header --- */
 .header-actions {
     display: flex;
@@ -355,7 +350,7 @@ body {
 .auth-buttons { display: flex; gap: 10px; }
 .btn {
     flex: 1;
-    padding: 10px 15px;
+    padding: 15px 10px;
     border: none;
     outline: none;
     color: var(--text-color);
@@ -405,9 +400,6 @@ body {
 
 /* --- Ajuste para el Logo --- */
 .logo {
-    /* ... (tus estilos existentes para .logo se mantienen) ... */
-    
-    /* AÑADE ESTA LÍNEA para que la transición sea suave en ambos sentidos */
     transition: opacity var(--transition-speed) ease;
 }
 
@@ -654,11 +646,6 @@ body {
     box-shadow: 0 8px 15px rgba(0, 255, 213, 0.15);
 }
 
-/* No olvides agregar esta animación a tu CSS si no la tienes de los botones */
-@keyframes glowing-animation {
-    0% { background-position: 0 0; }
-    100% { background-position: 600% 0; }
-}
 
 /* --- 9. FOOTER (VERSIÓN COMPACTA) --- */
 .site-footer {
