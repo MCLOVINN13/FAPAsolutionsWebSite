@@ -87,22 +87,30 @@
                         </div>
                         <div>
                             <label for="phone">Teléfono</label>
-                            <input id="phone" name="phone" type="tel" placeholder="+51 9xx xxx xxx" />
+                            <input id="phone" name="phone" type="tel" placeholder="+52 449 ###-####" />
                         </div>
                     </div>
 
                     <div class="form-row two-col">
                         <div>
                             <label for="device">Tipo de dispositivo</label>
-                            <select id="device" name="device" required>
-                                <option value="">Selecciona...</option>
-                                <option>Smartphone</option>
-                                <option>Tablet</option>
-                                <option>Ordenador / Laptop</option>
-                                <option>Televisor</option>
-                                <option>Consola</option>
-                                <option>Otro</option>
-                            </select>
+                            <!-- (MODIFICADO) Estructura para el dropdown personalizado -->
+                            <div class="custom-select-wrapper">
+                                <div class="custom-select" id="device" tabindex="0" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+                                    <div class="custom-select-trigger">
+                                        <span>Selecciona...</span>
+                                        <div class="arrow"></div>
+                                    </div>
+                                    <div class="custom-options" role="listbox">
+                                        <span class="custom-option" data-value="Smartphone">Smartphone</span>
+                                        <span class="custom-option" data-value="Tablet">Tablet</span>
+                                        <span class="custom-option" data-value="Ordenador / Laptop">Ordenador / Laptop</span>
+                                        <span class="custom-option" data-value="Televisor">Televisor</span>
+                                        <span class="custom-option" data-value="Consola">Consola</span>
+                                        <span class="custom-option" data-value="Otro">Otro</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <label for="brand">Marca y modelo</label>
@@ -117,16 +125,22 @@
 
                     <div class="form-row">
                         <label for="images">Adjuntar fotos (opcional)</label>
-                        <input id="images" name="images" type="file" accept="image/*" multiple />
-                        <small class="muted">Sube fotos claras del daño para mejorar la precisión de la cotización.</small>
+                        <!-- (MODIFICADO) Estructura para el botón de subida de archivos personalizado -->
+                        <div class="file-upload-wrapper">
+                            <input id="images" name="images" type="file" accept="image/*" multiple class="file-input-hidden" />
+                            <label for="images" class="btn btn-outline file-upload-label">Seleccionar archivos...</label>
+                            <span id="file-chosen-text" class="file-chosen-text muted">No se han seleccionado archivos.</span>
+                        </div>
+                        <small class="muted" style="margin-top: 0.5rem; display: block;">Sube fotos claras del daño para mejorar la precisión de la cotización.</small>
                     </div>
 
                     <div class="form-row">
                         <label>Preferencia de servicio</label>
-                        <div class="radio-group">
-                            <label><input type="radio" name="serviceType" value="envio" checked /> Envío a taller</label>
-                            <label><input type="radio" name="serviceType" value="presencial" /> Atención presencial</label>
-                            <label><input type="radio" name="serviceType" value="recogida" /> Recogida a domicilio</label>
+                        <!-- (MODIFICADO) Estructura para los radio buttons personalizados -->
+                        <div class="radio-group custom-radio-group">
+                            <div><input type="radio" name="serviceType" value="envio" id="serviceType-envio" checked /><label for="serviceType-envio">Envío a taller</label></div>
+                            <div><input type="radio" name="serviceType" value="presencial" id="serviceType-presencial" /><label for="serviceType-presencial">Atención presencial</label></div>
+                            <div><input type="radio" name="serviceType" value="recogida" id="serviceType-recogida" /><label for="serviceType-recogida">Recogida a domicilio</label></div>
                         </div>
                     </div>
 
@@ -149,13 +163,21 @@
 
                 <h4>Estimador rápido</h4>
                 <p class="muted">Selecciona el tipo de dispositivo para ver rangos orientativos.</p>
-                <select id="quickEstimate">
-                    <option value="">Ver rangos...</option>
-                    <option value="smartphone">Smartphone — S/ 40 - S/ 450</option>
-                    <option value="tablet">Tablet — S/ 60 - S/ 500</option>
-                    <option value="laptop">Laptop — S/ 120 - S/ 1200</option>
-                    <option value="tv">Televisor — S/ 150 - S/ 2000</option>
-                </select>
+                <!-- (MODIFICADO) Estructura para el dropdown personalizado del estimador -->
+                <div class="custom-select-wrapper">
+                    <div class="custom-select" id="quickEstimate" tabindex="0" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+                        <div class="custom-select-trigger">
+                            <span>Ver rangos...</span>
+                            <div class="arrow"></div>
+                        </div>
+                        <div class="custom-options" role="listbox">
+                            <span class="custom-option" data-value="smartphone">Smartphone — S/ 40 - S/ 450</span>
+                            <span class="custom-option" data-value="tablet">Tablet — S/ 60 - S/ 500</span>
+                            <span class="custom-option" data-value="laptop">Laptop — S/ 120 - S/ 1200</span>
+                            <span class="custom-option" data-value="tv">Televisor — S/ 150 - S/ 2000</span>
+                        </div>
+                    </div>
+                </div>
                 <div id="estimateResult" class="estimate-result muted">El rango aparecerá aquí al seleccionar.</div>
 
                 <h4>Cómo funciona</h4>

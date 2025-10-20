@@ -884,11 +884,69 @@ body {
     box-shadow: 0 0 15px var(--glow-color);
 }
 
-.radio-group label {
-    display: inline-block;
-    margin-right: 1rem;
-    font-weight: normal;
+/* (MODIFICADO) Estilos para el contenedor de radio buttons */
+.custom-radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.custom-radio-group div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.custom-radio-group label {
+    cursor: pointer;
     color: var(--text-color);
+    font-weight: normal;
+}
+
+/* --- (NUEVO) Estilos personalizados para radio buttons --- */
+.custom-radio-group input[type="radio"] {
+    -webkit-appearance: none;
+    /* remove default */
+    display: block;
+    margin: 0; /* Ajustado desde 10px */
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    vertical-align: middle;
+    box-shadow: hsla(0, 0%, 100%, .15) 0 1px 1px, inset hsla(0, 0%, 0%, .5) 0 0 0 1px;
+    background-color: hsla(0, 0%, 0%, .2);
+    background-image: -webkit-radial-gradient(hsla(200, 100%, 90%, 1) 0%, hsla(200, 100%, 70%, 1) 15%, hsla(200, 100%, 60%, .3) 28%, hsla(200, 100%, 30%, 0) 70%);
+    background-repeat: no-repeat;
+    transition: background-position .15s cubic-bezier(.8, 0, 1, 1),
+        transform .25s cubic-bezier(.8, 0, 1, 1);
+    outline: none;
+}
+
+.custom-radio-group input[type="radio"]:checked {
+    transition: background-position .2s .15s cubic-bezier(0, 0, .2, 1),
+        transform .25s cubic-bezier(0, 0, .2, 1);
+}
+
+.custom-radio-group input[type="radio"]:active {
+    transform: scale(1.5);
+    transition: transform .1s cubic-bezier(0, 0, .2, 1);
+}
+
+/* The up/down direction logic */
+.custom-radio-group input[type="radio"],
+.custom-radio-group input[type="radio"]:active {
+    background-position: 0 24px;
+}
+
+.custom-radio-group input[type="radio"]:checked {
+    background-position: 0 0;
+}
+
+.custom-radio-group input[type="radio"]:checked~input[type="radio"],
+.custom-radio-group input[type="radio"]:checked~input[type="radio"]:active {
+    background-position: 0 -24px;
 }
 
 .form-actions {
@@ -945,6 +1003,142 @@ body {
     color: rgba(240, 240, 240, 0.7);
 }
 
+/* --- (NUEVO) Estilos para el dropdown personalizado --- */
+.custom-select-wrapper {
+    position: relative;
+    user-select: none;
+    width: 100%;
+}
+
+.custom-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-select-trigger {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text-color);
+    background-color: #101010;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-select.open .custom-select-trigger,
+.custom-select-trigger:hover {
+    border-color: var(--primary-accent);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+.arrow {
+    position: relative;
+    height: 10px;
+    width: 10px;
+}
+
+.arrow::before, .arrow::after {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    width: 0.15rem;
+    height: 100%;
+    background-color: var(--text-color);
+    transition: all 0.3s;
+}
+
+.arrow::before {
+    left: -3px;
+    transform: rotate(-45deg);
+}
+
+.arrow::after {
+    left: 3px;
+    transform: rotate(45deg);
+}
+
+.custom-select.open .arrow::before { transform: rotate(45deg); }
+.custom-select.open .arrow::after { transform: rotate(-45deg); }
+
+.custom-options {
+    /* Estilos copiados del .dropdown-menu */
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    right: 0;
+    background: rgba(30, 30, 30, 0.8);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    padding: 10px;
+}
+
+.custom-select.open .custom-options {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.custom-option {
+    /* Estilos copiados de los items del .dropdown-menu */
+    display: block;
+    padding: 12px 15px;
+    color: var(--text-color);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.custom-option:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.custom-option.selected {
+    background-color: rgba(0, 255, 255, 0.1);
+    font-weight: 600;
+}
+
+/* --- (NUEVO) Estilos para el input de archivos personalizado --- */
+.file-upload-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.file-input-hidden {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.file-upload-label {
+    flex-shrink: 0; /* Evita que el botón se encoja */
+}
+
+.file-chosen-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 @media (max-width: 768px) {
     .cotizar.container.grid {
         grid-template-columns: 1fr;

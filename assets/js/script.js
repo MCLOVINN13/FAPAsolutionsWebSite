@@ -111,6 +111,82 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // =======================================================
+    // ==== BLOQUE 4: LÓGICA DE LA PÁGINA DE COTIZAR (cotizar.html) ===
+    // =======================================================
+    const quoteForm = document.getElementById('quoteForm');
+    if (quoteForm) {
+        // --- 4.1. Lógica para TODOS los dropdowns personalizados ---
+        const customSelects = document.querySelectorAll('.custom-select-wrapper');
+
+        customSelects.forEach(wrapper => {
+            const customSelect = wrapper.querySelector('.custom-select');
+            if (customSelect) {
+                const trigger = customSelect.querySelector('.custom-select-trigger');
+                const options = customSelect.querySelectorAll('.custom-option');
+                const triggerSpan = trigger.querySelector('span');
+
+                trigger.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Evita que el window.click se dispare inmediatamente
+                    // Cierra otros selects abiertos
+                    document.querySelectorAll('.custom-select.open').forEach(openSelect => {
+                        if (openSelect !== customSelect) {
+                            openSelect.classList.remove('open');
+                            openSelect.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                    // Abre/cierra el actual
+                    customSelect.classList.toggle('open');
+                    customSelect.setAttribute('aria-expanded', customSelect.classList.contains('open'));
+                });
+
+                options.forEach(option => {
+                    option.addEventListener('click', () => {
+                        triggerSpan.textContent = option.textContent;
+                        options.forEach(opt => opt.classList.remove('selected'));
+                        option.classList.add('selected');
+                        customSelect.classList.remove('open');
+                        customSelect.setAttribute('aria-expanded', 'false');
+
+                        // Lógica específica para el estimador rápido
+                        if (customSelect.id === 'quickEstimate') {
+                            const estimateResult = document.getElementById('estimateResult');
+                            if (estimateResult) {
+                                estimateResult.textContent = `Rango seleccionado: ${option.textContent}`;
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+        // Cerrar todos los dropdowns al hacer clic fuera
+        window.addEventListener('click', (e) => {
+            document.querySelectorAll('.custom-select.open').forEach(openSelect => {
+                // Si el clic no fue dentro del wrapper del select actual
+                if (!openSelect.parentElement.contains(e.target)) {
+                    openSelect.classList.remove('open');
+                    openSelect.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+        // --- 4.2. Lógica para el input de archivos personalizado ---
+        const fileInput = document.getElementById('images');
+        const fileChosenText = document.getElementById('file-chosen-text');
+
+        if (fileInput && fileChosenText) {
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    fileChosenText.textContent = this.files.length > 1 ? `${this.files.length} archivos seleccionados` : this.files[0].name;
+                } else {
+                    fileChosenText.textContent = 'No se han seleccionado archivos.';
+                }
+            });
+        }
+        // Aquí puedes añadir la lógica de validación y envío del formulario
+    }
+
 
     // =======================================================
     // ==== BLOQUE 3: LÓGICA DE LA PÁGINA DE PERFIL (userprofile.html) ===
