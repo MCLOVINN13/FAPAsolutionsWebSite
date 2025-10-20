@@ -906,9 +906,10 @@ body {
 
 /* --- (NUEVO) Estilos personalizados para radio buttons --- */
 .custom-radio-group input[type="radio"] {
+    appearance: none;
     -webkit-appearance: none;
     /* remove default */
-    display: block;
+    display: inline-block;
     margin: 0; /* Ajustado desde 10px */
     width: 24px;
     height: 24px;
@@ -917,6 +918,7 @@ body {
     vertical-align: middle;
     box-shadow: hsla(0, 0%, 100%, .15) 0 1px 1px, inset hsla(0, 0%, 0%, .5) 0 0 0 1px;
     background-color: hsla(0, 0%, 0%, .2);
+    background-image: radial-gradient(hsla(200, 100%, 90%, 1) 0%, hsla(200, 100%, 70%, 1) 15%, hsla(200, 100%, 60%, .3) 28%, hsla(200, 100%, 30%, 0) 70%);
     background-image: -webkit-radial-gradient(hsla(200, 100%, 90%, 1) 0%, hsla(200, 100%, 70%, 1) 15%, hsla(200, 100%, 60%, .3) 28%, hsla(200, 100%, 30%, 0) 70%);
     background-repeat: no-repeat;
     transition: background-position .15s cubic-bezier(.8, 0, 1, 1),
@@ -940,12 +942,15 @@ body {
     background-position: 0 24px;
 }
 
-.custom-radio-group input[type="radio"]:checked {
+.custom-radio-group input[type='radio']:checked {
     background-position: 0 0;
 }
 
-.custom-radio-group input[type="radio"]:checked~input[type="radio"],
-.custom-radio-group input[type="radio"]:checked~input[type="radio"]:active {
+.custom-radio-group input[type='radio']:checked ~ input[type='radio'] {
+    background-position: 0 -24px;
+}
+
+.custom-radio-group input[type='radio']:checked ~ input[type='radio']:active {
     background-position: 0 -24px;
 }
 
