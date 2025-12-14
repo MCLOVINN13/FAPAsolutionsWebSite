@@ -1,119 +1,186 @@
-document.addEventListener('DOMContentLoaded', () => {
-    checkLoginState();
+// Auth Logic using Supabase
 
-    // Determine if we are on login or register page
-    const loginForm = document.querySelector('form'); // The form in login.html/register.html
-    const isRegister = window.location.pathname.includes('register.html');
+// Handle Registration
+async function handleRegister(e) {
+    if (e) e.preventDefault();
     
-    // Only attach submit listener if we are on auth pages and form exists
-    if (loginForm && (window.location.pathname.includes('login.html') || isRegister)) {
-        loginForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = loginForm.querySelector('button');
-            const originalText = btn.textContent;
-            btn.textContent = 'Procesando...';
-            btn.disabled = true;
+    // Clear previous errors
+    const errorMsg = document.getElementById('registerError');
+    const successMsg = document.getElementById('registerSuccess');
+    if (errorMsg) errorMsg.style.display = 'none';
+    if (successMsg) successMsg.style.display = 'none';
 
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            let age = null;
-            
-            if (isRegister) {
-                const ageInput = document.getElementById('age');
-                if (ageInput) age = ageInput.value;
-            }
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const fullname = document.getElementById('fullname').value || email.split('@')[0];
+    const age = document.getElementById('age') ? document.getElementById('age').value : null;
 
-            const endpoint = isRegister ? '/api/register' : '/api/login';
-            const payload = isRegister ? { email, password, age } : { email, password };
+    const btn = e.target.querySelector('button');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Registrando...';
 
-            try {
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const result = await response.json();
-
-                if (response.ok) {
-                    if (isRegister) {
-                        alert('Registro exitoso. Ahora puedes iniciar sesión.');
-                        window.location.href = 'login.html';
-                    } else {
-                        // Login successful
-                        localStorage.setItem('user', JSON.stringify(result.user));
-                        window.location.href = 'index.html';
-                    }
-                } else {
-                    alert(result.error || 'Ocurrió un error');
+    try {
+        // 1. Sign Up
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    fullname: fullname,
+                    age: age
                 }
-            } catch (error) {
-                console.error(error);
-                alert('Error de conexión');
-            } finally {
-                btn.textContent = originalText;
-                btn.disabled = false;
             }
         });
-    }
-});
 
-function checkLoginState() {
-    const userStr = localStorage.getItem('user');
-    if (!userStr) return;
+        if (error) throw error;
 
-    const user = JSON.parse(userStr);
-    const username = user.email.split('@')[0];
+        // 2. Insert into 'usuarios' table
+        if (data.user) {
+            const { error: dbError } = await supabase.from('usuarios').insert([
+                {
+                    id: data.user.id,
+                    email: email,
+                    fullname: fullname,
+                    username: email.split('@')[0] + Math.floor(Math.random() * 1000), 
+                }
+            ]);
+            
+            if (dbError) {
+                console.warn('DB Insert Warning:', dbError);
+                // If it fails (e.g., RLS), we might still be OK if trigger exists or if we rely on auth metadata
+            }
+        }
 
-    // --- Header / Dropdown Updates ---
-    const authButtons = document.querySelector('.auth-buttons');
-    const userInfoName = document.querySelector('.user-info h4');
-    const userInfoWelcome = document.querySelector('.user-info p');
-    
-    if (authButtons) authButtons.style.display = 'none';
-    
-    if (userInfoName) userInfoName.textContent = username;
-    if (userInfoWelcome) userInfoWelcome.textContent = user.email;
-
-    // Add Logout Button to Dropdown if not exists
-    const menuList = document.querySelector('.dropdown-menu ul');
-    if (menuList && !document.getElementById('logoutLink')) {
-        const li = document.createElement('li');
-        li.innerHTML = '<a href="#" id="logoutLink" style="color: #ff6b6b; font-weight: bold;">Cerrar Sesión</a>';
-        menuList.appendChild(li);
+        if (successMsg) {
+            successMsg.textContent = 'Registro exitoso. ¡Bienvenido!';
+            successMsg.style.display = 'block';
+        }
         
-        document.getElementById('logoutLink').addEventListener('click', (e) => {
-            e.preventDefault();
-            logout();
-        });
-    }
+        // Auto login or redirect
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1500);
 
-    // --- Profile Page Updates ---
-    if (window.location.pathname.includes('userprofile.html')) {
-        loadProfileData(user, username);
+    } catch (err) {
+        console.error(err);
+        if (errorMsg) {
+            errorMsg.textContent = err.message || 'Error al registrarse';
+            errorMsg.style.display = 'block';
+        }
+    } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
     }
 }
 
-function logout() {
+// Handle Login
+async function handleLogin(e) {
+    if (e) e.preventDefault();
+    
+    const errorMsg = document.getElementById('loginError');
+    if (errorMsg) errorMsg.style.display = 'none';
+
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    const btn = e.target.querySelector('button');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Iniciando sesión...';
+
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+        if (error) throw error;
+
+        // Fetch profile to get extended details (username, pictures)
+        const { data: profile } = await supabase
+            .from('usuarios')
+            .select('*')
+            .eq('id', data.user.id)
+            .single();
+            
+        const userData = {
+            id: data.user.id,
+            email: data.user.email,
+            fullname: (profile && profile.fullname) ? profile.fullname : data.user.user_metadata.fullname,
+            username: (profile && profile.username) ? profile.username : data.user.email.split('@')[0],
+            profile_pic: (profile && profile.profile_pic) ? profile.profile_pic : null,
+            cover_pic: (profile && profile.cover_pic) ? profile.cover_pic : null
+        };
+
+        localStorage.setItem('user', JSON.stringify(userData));
+        window.location.href = 'index.html';
+
+    } catch (err) {
+        console.error(err);
+        if (errorMsg) {
+            errorMsg.textContent = 'Credenciales inválidas';
+            errorMsg.style.display = 'block';
+        }
+    } finally {
+        btn.disabled = false;
+        btn.textContent = originalText;
+    }
+}
+
+// Global Logout
+async function logout() {
+    await supabase.auth.signOut();
     localStorage.removeItem('user');
     window.location.href = 'index.html';
 }
 
-function loadProfileData(user, username) {
-    // Header section
-    const displayNames = document.querySelectorAll('.profile-display-name');
-    const displayUsernames = document.querySelectorAll('.profile-username');
-    
-    displayNames.forEach(el => el.textContent = username);
-    displayUsernames.forEach(el => el.textContent = '@' + username);
+// Check Login State & Update UI
+function checkLoginState() {
+    const userStr = localStorage.getItem('user');
+    const authButtons = document.querySelector('.auth-buttons');
+    const userMenu = document.querySelector('.user-info');
 
-    // Form inputs
-    const nameInput = document.getElementById('profile-name');
-    const emailInput = document.getElementById('profile-email');
-    
-    if (nameInput) nameInput.value = username;
-    if (emailInput) emailInput.value = user.email;
-    
-    // Join date (if we had it in localStorage, we could set it too)
-    // For now we just set name/email
+    if (userStr) {
+        const user = JSON.parse(userStr);
+        if (authButtons) authButtons.style.display = 'none';
+        
+        if (userMenu) {
+            userMenu.innerHTML = `
+                <div class="user-avatar">
+                   ${user.profile_pic ? `<img src="${user.profile_pic}" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">` : 
+                   `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg>`}
+                </div>
+                <div class="user-details">
+                    <h4>${user.fullname || 'Usuario'}</h4>
+                    <p>${user.email}</p>
+                </div>
+            `;
+            
+            const dropdown = document.querySelector('.dropdown-menu ul');
+            if (dropdown && !document.getElementById('logout-link')) {
+                const li = document.createElement('li');
+                li.id = 'logout-link';
+                li.innerHTML = '<a href="#" onclick="logout(); return false;" style="color: #ff6b6b;">Cerrar Sesión</a>';
+                dropdown.appendChild(li);
+            }
+        }
+    } else {
+        if (authButtons) authButtons.style.display = 'flex';
+        if (userMenu) userMenu.innerHTML = `
+            <div class="user-avatar"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/></svg></div>
+            <div class="user-details"><h4>Invitado</h4><p>Bienvenido</p></div>
+        `;
+    }
 }
+
+// Initial Listener
+document.addEventListener('DOMContentLoaded', () => {
+    checkLoginState();
+
+    const registerForm = document.getElementById('registerForm');
+    if (registerForm) registerForm.addEventListener('submit', handleRegister);
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) loginForm.addEventListener('submit', handleLogin);
+});
