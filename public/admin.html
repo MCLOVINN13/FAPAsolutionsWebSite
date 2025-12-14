@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - FAPA Solutions</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+      .admin-container {
+        max-width: 1200px;
+        margin: 120px auto;
+        padding: 20px;
+        color: #fff;
+      }
+      .quote-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .quote-table th,
+      .quote-table td {
+        text-align: left;
+        padding: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .quote-table th {
+        background: rgba(0, 0, 0, 0.5);
+        color: var(--primary);
+      }
+      .status-select {
+        background: #222;
+        color: #fff;
+        border: 1px solid #444;
+        padding: 5px;
+        border-radius: 5px;
+      }
+      .refresh-btn {
+        background: var(--primary);
+        color: #000;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo">
+          FAPA<span>Solutions</span> <small>[ADMIN]</small>
+        </div>
+        <ul class="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="#" class="logout-link" style="color: red">Salir</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="admin-container">
+      <h1>Gestión de Cotizaciones</h1>
+      <button class="refresh-btn" onclick="loadQuotes()">
+        Actualizar Lista
+      </button>
+
+      <table class="quote-table">
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Usuario</th>
+            <th>Dispositivo</th>
+            <th>Problema</th>
+            <th>Precio Est.</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody id="quotesBody">
+          <!-- Rows injected by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-init.js"></script>
+    <script src="assets/js/admin.js"></script>
+  </body>
+</html>

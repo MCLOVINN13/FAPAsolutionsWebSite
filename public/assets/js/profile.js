@@ -166,6 +166,9 @@ async function loadProfile() {
         return;
     }
     const userTmp = JSON.parse(userStr);
+    
+    // Init Realtime
+    initRealtimeQuotes(userTmp.id);
 
     try {
         const response = await fetch(`/api/profile?id=${userTmp.id}`);
